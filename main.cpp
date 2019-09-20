@@ -73,6 +73,8 @@ void at_exit()
 
 int main(int argc, char* argv[])
 {
+    //#define TEST_IPC_STUFF
+    #ifdef TEST_IPC_STUFF
     ///i'm the parent process
     if(argc == 1)
     {
@@ -140,6 +142,28 @@ int main(int argc, char* argv[])
         write_all_bin("ipc.back", "open_me.js");
         rename("ipc.back", "ipc");
     }
+    #endif // TEST_IPC_STUFF
+
+    #define TEST_STEAM_VANILLA_BEHAVIOUR
+    #ifdef TEST_STEAM_VANILLA_BEHAVIOUR
+    SteamAPI_Init();
+    ///make really sure its not just a race condition
+    sf::sleep(sf::milliseconds(10000));
+
+    #define TEST_JS
+    #ifdef TEST_JS
+    system("start open_me.js");
+    #else
+    system("start dummy.pdf");
+    #endif // TEST_JS
+
+    printf("Post start\n");
+
+    while(1)
+    {
+        sf::sleep(sf::milliseconds(1000));
+    }
+    #endif // TEST_STEAM_VANILLA_BEHAVIOUR
 
     return 0;
 }
