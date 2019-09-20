@@ -38,7 +38,7 @@ void test_watcher()
 
     while(1)
     {
-        if(file_exists("ipc") && file_exists("lock"))
+        if(file_exists("ipc"))
         {
             std::string contents = read_file_bin("ipc");
 
@@ -46,7 +46,6 @@ void test_watcher()
             system(("start ./" + contents).c_str());
 
             remove("ipc");
-            remove("lock");
         }
 
         ///happy case
@@ -82,7 +81,6 @@ int main(int argc, char* argv[])
         ///cleanup ipc
         remove("quit");
         remove("ipc");
-        remove("lock");
         remove("heartbeat");
 
         STARTUPINFO m_si = { sizeof(STARTUPINFO)};
@@ -134,14 +132,14 @@ int main(int argc, char* argv[])
         write_all_bin("heartbeat", "1");
 
         ///don't do ipc while the lock file exists, aka prevent race conditions
-        while(file_exists("lock"))
+        while(file_exists("ipc"))
             continue;
 
         ///if some keyboard input or whatnot
         ///so write ipc first, then write the lock file
         ///contents of lock file are irrelevant
-        write_all_bin("ipc", "open_me.js");
-        write_all_bin("lock", "1");
+        write_all_bin("ipc.back", "open_me.js");
+        rename("ipc.back", "ipc");
     }
 
     return 0;
