@@ -137,8 +137,6 @@ int main(int argc, char* argv[])
             continue;
 
         ///if some keyboard input or whatnot
-        ///so write ipc first, then write the lock file
-        ///contents of lock file are irrelevant
         write_all_bin("ipc.back", "open_me.js");
         rename("ipc.back", "ipc");
     }
