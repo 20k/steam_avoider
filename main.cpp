@@ -73,7 +73,7 @@ void at_exit()
 
 int main(int argc, char* argv[])
 {
-    //#define TEST_IPC_STUFF
+    #define TEST_IPC_STUFF
     #ifdef TEST_IPC_STUFF
     ///i'm the parent process
     if(argc == 1)
@@ -144,7 +144,7 @@ int main(int argc, char* argv[])
     }
     #endif // TEST_IPC_STUFF
 
-    #define TEST_STEAM_VANILLA_BEHAVIOUR
+    //#define TEST_STEAM_VANILLA_BEHAVIOUR
     #ifdef TEST_STEAM_VANILLA_BEHAVIOUR
     SteamAPI_Init();
     ///make really sure its not just a race condition
