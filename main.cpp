@@ -1,7 +1,6 @@
 #include <iostream>
 #include <windows.h>
 #include <shellapi.h>
-#include <iostream>
 #include <string>
 #include <SFML/System.hpp>
 #include <fstream>
@@ -24,7 +23,6 @@ bool file_exists(const std::string& name)
     std::ifstream f(name.c_str());
     return f.good();
 }
-
 
 void write_all_bin(const std::string& fname, const std::string& str)
 {
@@ -129,9 +127,10 @@ int main(int argc, char* argv[])
     while(1)
     {
         sf::sleep(sf::milliseconds(1000));
+        ///write a heartbeat intermittently, there's not really a way to avoid this
         write_all_bin("heartbeat", "1");
 
-        ///don't do ipc while the lock file exists, aka prevent race conditions
+        ///don't do ipc while there's unprocessed ipc
         while(file_exists("ipc"))
             continue;
 
